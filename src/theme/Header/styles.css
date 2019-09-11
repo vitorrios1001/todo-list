@@ -1,0 +1,15 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    background-color: rgb(49, 109, 219);
+    height: 70px;
+    padding: 10px;
+    padding: 10px;
+}
+
+.container > .avatar > img { 
+    width: 50px;   
+    border-radius: 50px;     
+}

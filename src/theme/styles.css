@@ -1,0 +1,16 @@
+.container-content {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    padding: 5px;    
+}
+
+.container-content > .content {
+    width: 100%;
+    display: flex;
+    padding: 20px;
+    height: 100%;
+    background-color: #DDD;
+}
