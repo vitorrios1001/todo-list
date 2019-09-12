@@ -1,13 +1,13 @@
 import firebase from 'firebase';
 
 const config = {
-    apiKey: "AIzaSyBx2avlzy-FLbeqbPwUfWk0FrYWBnHaNFY",
-    authDomain: "todo-list-b157a.firebaseapp.com",
-    databaseURL: "https://todo-list-b157a.firebaseio.com",
-    projectId: "todo-list-b157a",
-    storageBucket: "",
-    messagingSenderId: "153942173117",
-    appId: "1:153942173117:web:1f8f35c03ed49b91ba9ed4"
+    apiKey: process.env.REACT_APP_FIREBASE_CONFIG_apiKey,
+    authDomain: process.env.REACT_APP_FIREBASE_CONFIG_authDomain,
+    databaseURL: process.env.REACT_APP_FIREBASE_CONFIG_databaseURL,
+    projectId: process.env.REACT_APP_FIREBASE_CONFIG_projectId,
+    storageBucket: process.env.REACT_APP_FIREBASE_CONFIG_storageBucket,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_CONFIG_messagingSenderId,
+    appId: process.env.REACT_APP_FIREBASE_CONFIG_appId
 }
 
 
