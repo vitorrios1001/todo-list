@@ -3,7 +3,11 @@ import { generateId } from '../helpers/util'
 
 export const getTodos = async () => {
     try {
-        const data = await firestore.collection('todo').get();
+        const userLogged = JSON.parse(localStorage.getItem('user'))
+
+        const data = await firestore.collection('todo')
+            .where("userId", "==", userLogged.id)
+            .get();
 
         let todos = [];
 
@@ -31,11 +35,37 @@ export const addTodo = async (todo) => {
             ...todo,
         }
 
-        await firestore.collection('todo').add(item);
+        const data = await firestore.collection('todo').add(item);
 
-        return todo;
+        const itemInserted = await data.get()
+
+        return itemInserted.data();
     } catch (error) {
         console.log(error);
         return null;
+    }
+}
+
+export const changeStatusTodo = async (todoId, value) => {
+    try {
+        const data = await firestore.collection('todo')
+
+                                    .where('id', '==', todoId)
+                                    .limit(1)
+                                    .get();
+
+        let todo = {};
+
+        data.forEach((item, index) => {
+            if(index === 0)
+                todo = item.data();
+        })
+        
+
+
+
+    } catch (error) {
+        console.log(error)
+        return false;
     }
 }

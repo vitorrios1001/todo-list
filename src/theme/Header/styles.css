@@ -1,15 +1,39 @@
 .container {
-    display: flex;
+    width: 100%;
+    display: flex;    
     justify-content: space-between;
     align-items: center;
     height: 100%;
     background-color: rgb(49, 109, 219);
-    height: 70px;
-    padding: 10px;
-    padding: 10px;
+    height: 70px;    
+    position: fixed;
+}
+
+.container > .avatar {
+    display: flex;
+    align-items: center;
+}
+
+.container > .avatar > span.title {
+    color: #FFF;
+    margin-left: 10px;
+    font-size: 22px;
 }
 
 .container > .avatar > img { 
     width: 50px;   
-    border-radius: 50px;     
+    border-radius: 50px;
+    margin-left: 10px;     
+}
+
+.container > .logout > button {
+    margin-right: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.container > .logout > button > i {
+    color: #FFF;
+    font-size: 25px;
 }

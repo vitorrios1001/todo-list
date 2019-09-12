@@ -1,6 +1,7 @@
 import React from 'react';
 import './styles.css'
 import Header from './Header'
+import Footer from './Footer'
 
 const Theme = ({ children }) => {
 
@@ -12,6 +13,7 @@ const Theme = ({ children }) => {
                     {children}
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }

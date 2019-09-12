@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import firebase from 'firebase'
 
-import { googleAuthProvider, app } from '../../services/firebase'
-//import { firestore } from '../../services/firebase'
+import { googleAuthProvider } from '../../services/firebase'
 
-const Login = ({ history }) => {
+import './styles.css'
 
-    const [logs, setLogs] = useState([])
+const Login = () => {
 
     const handleLogin = async () => {
-
-
         const result = await firebase.auth().signInWithPopup(googleAuthProvider);
 
         var token = result.credential.accessToken;
@@ -27,50 +24,25 @@ const Login = ({ history }) => {
         localStorage.setItem('user', JSON.stringify(userLogin))
         localStorage.setItem('token', token);
 
-        console.log(result)
-        console.log(token)
-        console.log(user)
-        console.log(userLogin)
-
+        window.location.assign('/')
     }
 
-    // useEffect(() => {
-    //     function gerarLog() {
-    //         const log = {
-    //             dataAtual: new Date(),
-    //         }
-
-    //         firestore.collection('log').add(log);
-    //     }
-
-    //     async function buscarLogs() {
-    //         const data = await firestore.collection('log').get();
-
-    //         let logs = [];
-
-    //         data.forEach(item => {
-    //             logs.push({
-    //                 id: item.id,
-    //                 ...item.data(),
-    //             })
-    //         })
-    //         setLogs(logs);
-    //     }
-
-    //     gerarLog()
-    //     buscarLogs();
-    // }, [])
-
-
     return (
-        <div>
-            <h3>Login</h3>
-            <button onClick={handleLogin} >
-                Login Google
-            </button>
-            {
-                logs.map((item, index) => <p key={index}>{Date(item.dataAtual)}</p>)
-            }
+        <div className='container-login'>
+            <div className='form-login'>
+                <span className='title-product'>Todo List</span>
+                <span className='title-login'>Login</span>
+                <div className="buttons-login">
+                    <button
+                        className='btn-login'
+                        onClick={handleLogin}
+                    >
+                        <i className='fa fa-google' />
+                        <span>Login Google</span>
+                    </button>
+                </div>
+
+            </div>
         </div>
     )
 }

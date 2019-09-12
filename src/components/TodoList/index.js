@@ -3,51 +3,43 @@ import React, { useState, useEffect } from 'react';
 
 import { addTodo, getTodos } from '../../services/todo'
 
+import Form from './Form'
+
 const TodoList = () => {
 
-    const [todoItem, setTodoItem] = useState('')
     const [todoList, setTodoList] = useState([])
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         async function getData() {
-            //console.log(process.env)
+            setLoading(true)
+            const todos = await getTodos();
 
-            //const todos = await getTodos();
-
-            //setTodoList(todos)
+            setTodoList(todos)
+            setLoading(false)
         }
 
         getData();
     }, [])
 
-    const handleSubmit = e => {
-        e.preventDefault();
+    const addTodoItem = async item => {
+        setLoading(true)
+        const itemResult = await addTodo(item);
 
-        const item = { checked: false, description: todoItem };
-
-        const itemResult = addTodo(item);
-
-        setTodoList([...todoList, itemResult]);
-        setTodoItem('');
+        setTodoList([itemResult, ...todoList]);
+        setLoading(false)
     }
 
     return (
         <div>
             <div>
-                <form onSubmit={handleSubmit} >
-                    <input
-                        type='text'
-                        value={todoItem}
-                        onChange={e => setTodoItem(e.target.value)}
-                    />
-                    <input
-                        type='submit'
-                        value='Add'
-                    />
-                </form>
+
+                <Form addTodo={addTodoItem} />
+
             </div>
-
-
+            {
+                loading && <div><span>Loading...</span></div>
+            }
             <div className='todo-list'>
                 {
                     todoList.map((item, index) => (
@@ -55,7 +47,8 @@ const TodoList = () => {
                             <input
                                 type='checkbox'
                                 value={item.checked}
-                                checked={e => console.log(e)}
+                                checked={item.checked}
+                                onChange={e => console.log(e.target.checked)}
                             /> {item.description}
                         </p>
                     ))
