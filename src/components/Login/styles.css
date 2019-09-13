@@ -9,11 +9,14 @@
 
 .container-login > .form-login {
     background: #FFF;
-    max-width: 100%;
-    width: 250px;
-    height: 200px;
+    max-width: 280px;
+    width: 100%;
+    height: 300px;
     display: flex;
-    flex-direction: column;    
+    flex-direction: column; 
+    border-radius: 5px;   
+    box-shadow: rgb(54, 51, 51);
+    box-sizing: content-box;
 }
 
 .container-login > .form-login > span.title-login {
@@ -31,6 +34,7 @@
 
 .container-login > .form-login > .buttons-login > button.btn-login {
     height: 35px;
+    border: none;
     color: #FFF;
     background-color: rgb(221, 73, 73);
     margin-left: 10px;
@@ -47,4 +51,47 @@
 
 .container-login > .form-login > .buttons-login > button.btn-login > span {
     font-size: 15px;    
+}
+
+.container-login > .form-login > form.form-login-email {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.container-login > .form-login > form.form-login-email > input {
+    height: 20px;    
+    background:#ecf0f1;
+    border: #ccc 1px solid;
+    border-bottom: #ccc 2px solid;
+    padding: 8px;
+    color:#AAAAAA;
+    margin-top:10px;
+    font-size:1em;
+    border-radius:4px;
+}
+
+.container-login > .form-login > form.form-login-email > .container-button-login > button {
+    background:#2ecc71;
+    width:125px;
+    padding-top:5px;
+    padding-bottom:5px;
+    color:white;
+    border-radius:4px;
+    border: #27ae60 1px solid;
+    margin-top:20px;
+    margin-bottom:20px;
+    float:left;
+    margin-left:88px;
+    font-weight:800;
+    font-size:0.8em;    
+}
+
+.container-login > .form-login > form.form-login-email {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.container-login > .form-login > form.form-login-email > .container-button-login {
+    
 }

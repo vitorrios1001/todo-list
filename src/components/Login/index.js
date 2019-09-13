@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import firebase from 'firebase'
 
 import { googleAuthProvider } from '../../services/firebase'
@@ -6,6 +6,18 @@ import { googleAuthProvider } from '../../services/firebase'
 import './styles.css'
 
 const Login = () => {
+
+    const [form, setForm] = useState({
+        username: '',
+        password: ''
+    })
+
+    const handleChangeField = e => {
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value,
+        })
+    }
 
     const handleLogin = async () => {
         const result = await firebase.auth().signInWithPopup(googleAuthProvider);
@@ -27,6 +39,12 @@ const Login = () => {
         window.location.assign('/')
     }
 
+    const handleSubmit = e => {
+        e.preventDefault();
+        console.log(form)
+        alert('Login by email in production')
+    }
+
     return (
         <div className='container-login'>
             <div className='form-login'>
@@ -41,7 +59,32 @@ const Login = () => {
                         <span>Login Google</span>
                     </button>
                 </div>
-
+                <form onSubmit={handleSubmit} className="form-login-email">
+                    <input
+                        className="user-name"
+                        type="text"
+                        value={form.username}
+                        onChange={handleChangeField}
+                        name="username"
+                        placeholder="Insert here your username"
+                    />
+                    <input
+                        className="password"
+                        type="password"
+                        onChange={handleChangeField}
+                        value={form.password}
+                        name="password"
+                        placeholder="********"
+                    />
+                    <div className="container-button-login">
+                        <button
+                            className="login"
+                            type='submit'
+                        >
+                            Login
+                    </button>
+                    </div>
+                </form>
             </div>
         </div>
     )
