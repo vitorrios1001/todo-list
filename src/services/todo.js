@@ -1,71 +1,93 @@
 import { firestore } from './firebase';
 import { generateId } from '../helpers/util'
+import { getUserLogged } from '../helpers/auth';
 
 export const getTodos = async () => {
-    try {
-        const userLogged = JSON.parse(localStorage.getItem('user'))
+  try {
+    const userLogged = getUserLogged()
 
-        const data = await firestore.collection('todo')
-            .where("userId", "==", userLogged.id)
-            .get();
+    const data = await firestore.collection('todo')
+      .where("userId", "==", userLogged.id)
+      .get();
 
-        let todos = [];
+    let todos = [];
 
-        data.forEach(item => {
-            todos.push({
-                ...item.data(),
-            })
-        })
+    data.forEach(item => {
+      todos.push({ ...item.data() })
+    })
 
-        return todos;
-    } catch (error) {
-        console.log(error);
-        return [];
-    }
+    return todos;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 }
 
 export const addTodo = async (todo) => {
-    try {
+  try {
+    const userLogged = getUserLogged()
 
-        const userLogged = JSON.parse(localStorage.getItem('user'))
-
-        const item = {
-            id: generateId(),
-            userId: userLogged.id,
-            ...todo,
-        }
-
-        const data = await firestore.collection('todo').add(item);
-
-        const itemInserted = await data.get()
-
-        return itemInserted.data();
-    } catch (error) {
-        console.log(error);
-        return null;
+    const item = {
+      id: generateId(),
+      userId: userLogged.id,
+      ...todo,
     }
+
+    const data = await firestore.collection('todo').add(item);
+
+    const itemInserted = await data.get()
+
+    return itemInserted.data();
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export const removeTodo = async (id) => {
+  try {
+    const userLogged = getUserLogged()
+
+    const query = await firestore.collection('todo')
+                                .where("userId", "==", userLogged.id)
+                                .where("id", "==", id)
+            
+    query.get().then(resp => {
+      resp.forEach(doc => {
+        doc.ref.delete()
+      })
+    }).catch(err => {
+      console.log(err)
+      return false
+    })                   
+    
+    return true
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
 }
 
 export const changeStatusTodo = async (todoId, value) => {
-    try {
-        const data = await firestore.collection('todo')
+  try {
+    const userLogged = getUserLogged()
 
-                                    .where('id', '==', todoId)
-                                    .limit(1)
-                                    .get();
-
-        let todo = {};
-
-        data.forEach((item, index) => {
-            if(index === 0)
-                todo = item.data();
-        })
-        
-
-
-
-    } catch (error) {
-        console.log(error)
-        return false;
-    }
+    const query = await firestore.collection('todo')
+                                  .where("userId", "==", userLogged.id)
+                                  .where("id", "==", todoId)
+                                
+    query.get().then(resp => {
+      resp.forEach(doc => {
+        doc.ref.update({ checked: value })
+      })
+    }).catch(err => {
+      console.log(err)
+      return false
+    })        
+    
+    return true
+  } catch (error) {
+    console.log(error)
+    return false;
+  }
 }
